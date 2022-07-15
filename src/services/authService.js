@@ -11,7 +11,6 @@ const authService = {
     const user = await db.User.findOne({
       where: { email },
     });
-    console.log(user);
     if (!user || user.password !== password) {
       throw new Error('Invalid fields');
     }
