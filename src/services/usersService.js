@@ -37,6 +37,22 @@ const usersService = {
 
     return security;
   },
+  getId: async (id) => {
+    const item = await db.User.findByPk(id);
+
+    if (!item) {
+      throw new Error('User does not exist');
+    }
+
+    const security = {
+      id: Number(id),
+      displayName: item.displayName,
+      email: item.email,
+      image: item.image,
+    };
+
+    return security;
+  },
 };
 
 module.exports = usersService;

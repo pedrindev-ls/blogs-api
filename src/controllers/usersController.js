@@ -32,6 +32,23 @@ const usersController = {
       return res.status(401).json({ message: error.message });
     }
   },
+  getUserId: async (req, res) => {
+    try {
+      const { authorization } = req.headers;
+      const { id } = req.params;
+
+      jwtService.validateToken(authorization);
+
+      const user = await usersService.getId(id);
+
+      return res.status(200).json(user);
+    } catch (error) {
+      if (error.message === 'User does not exist') {
+        return res.status(404).json({ message: error.message });
+      }
+      return res.status(401).json({ message: error.message });
+    }
+  },
 };
 
 module.exports = usersController;
