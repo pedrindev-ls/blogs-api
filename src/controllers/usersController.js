@@ -14,7 +14,7 @@ const usersController = {
       res.status(201).json({ token });
     } catch (error) {
       if (error.message === 'User already registered') {
-        res.status(409).json({ message: error.message });
+        return res.status(409).json({ message: error.message });
       }
       res.status(400).json({ message: error.message });
     }
