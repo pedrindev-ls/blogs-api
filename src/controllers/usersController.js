@@ -6,8 +6,7 @@ const usersController = {
     try {
       const newUser = usersService.validateRegister(req.body);
 
-      const addNewUser = await usersService.addUser(newUser);
-      console.log(addNewUser);
+      await usersService.addUser(newUser);
       
       const { displayName, email, image } = newUser;
       const token = jwtService.createToken({ displayName, email, image });
@@ -18,6 +17,19 @@ const usersController = {
         res.status(409).json({ message: error.message });
       }
       res.status(400).json({ message: error.message });
+    }
+  },
+  getUser: async (req, res) => {
+    try {
+      const { authorization } = req.headers;
+
+      jwtService.validateToken(authorization);
+
+      const users = await usersService.getUsers();
+  
+      return res.status(200).json(users);
+    } catch (error) {
+      return res.status(401).json({ message: error.message });
     }
   },
 };

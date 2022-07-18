@@ -27,6 +27,16 @@ const usersService = {
     const user = await db.User.create({ displayName, email, password, image });
     return user;
   },
+  getUsers: async () => {
+    const items = await db.User.findAll();
+
+    const security = items.map(({ id, displayName, email, image }) => {
+      const item = { id, displayName, email, image };
+      return item;
+    });
+
+    return security;
+  },
 };
 
 module.exports = usersService;
