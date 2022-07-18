@@ -9,6 +9,10 @@ const categoryService = {
     
     return item;
   },
+  get: async () => {
+    const items = db.Category.findAll();
+    return items;
+  },
 };
 
 module.exports = categoryService;

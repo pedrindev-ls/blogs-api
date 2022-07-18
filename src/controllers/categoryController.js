@@ -19,6 +19,18 @@ const categoryController = {
       res.status(401).json({ message: error.message });
     }
   },
+  getAll: async (req, res) => {
+    try {
+      const { authorization } = req.headers;
+      jwtService.validateToken(authorization);
+
+      const items = await categoryService.get();
+
+      res.status(200).json(items);
+    } catch (error) {
+      res.status(401).json({ message: error.message });
+    }
+  },
 };
 
 module.exports = categoryController;
