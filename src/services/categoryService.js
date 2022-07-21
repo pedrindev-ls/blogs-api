@@ -10,7 +10,7 @@ const categoryService = {
     return item;
   },
   get: async () => {
-    const items = db.Category.findAll();
+    const items = await db.Category.findAll();
     return items;
   },
 };

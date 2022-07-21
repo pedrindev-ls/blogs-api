@@ -53,6 +53,18 @@ const usersService = {
 
     return security;
   },
+  getWithKey: async (data) => {
+    const item = await db.User.findOne({ where: { email: data } });
+
+    const security = {
+      id: item.id,
+      displayName: item.displayName,
+      email: item.email,
+      image: item.image,
+    };
+
+    return security;
+  },
 };
 
 module.exports = usersService;
