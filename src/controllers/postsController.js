@@ -31,6 +31,18 @@ const postController = {
       res.status(401).json({ message: error.message });
     }
   },
+  getPosts: async (req, res) => {
+    try {
+      const { authorization } = req.headers;
+      jwtService.validateToken(authorization);
+
+      const info = await postService.getAll();
+
+      res.status(200).json(info);
+    } catch (error) {
+      res.status(401).json({ message: error.message });
+    }
+  },
 };
 
 module.exports = postController;

@@ -1,21 +1,34 @@
 const sequelize = require('sequelize');
+const db = require('.');
 
 const CreatePostCategory = (sequelize, DataTypes) => {
   const PostCategory = sequelize.define('PostCategory',{
-    postId: DataTypes.INTEGER,
-    categoryId: DataTypes.INTEGER,
+    postId: {
+      type: DataTypes.INTEGER,
+      references:{ 
+        model: 'BlogPosts',
+        key: 'id',
+      }
+    },
+    categoryId: {
+      type: DataTypes.INTEGER,
+      references:{ 
+        model: 'Categories',
+        key: 'id',
+      }
+    }
   }, {
     timestamps: false,
   })
 
-  PostCategory.associate = ({ BlogPost, Category }) => {
-    BlogPost.belongsToMany(Category, {
+  PostCategory.associate = ({ BlogPost, Categories }) => {
+    BlogPost.belongsToMany(Categories, {
       as: 'categories',
       ForeignKey: 'postId',
       through: 'PostCategory',
       otherKey: 'categoryId'
     })
-    Category.belongsToMany(BlogPost, {
+    Categories.belongsToMany(BlogPost, {
       as: 'blogPosts',
       foreignKey: 'categoryId',
       through: 'PostCategory',

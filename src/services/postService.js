@@ -12,6 +12,26 @@ const postService = {
     const item = await db.BlogPost.create({ title, content, userId });
     return item;
   },
+  getAll: async () => {
+    const item = await db.BlogPost.findAll({
+      include: [
+        { model: db.User,
+        as: 'user',
+        attributes: { 
+          exclude: ['password'], 
+        }, 
+      },
+      {
+        model: db.Categories,
+        as: 'categories',
+        through: {
+          attributes: [],
+        },
+      },
+    ],
+  });
+    return item;
+  },
 };
 
 module.exports = postService;
